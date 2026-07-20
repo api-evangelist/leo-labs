@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+docs: https://docs.leolabs.space/
+docs_note: LeoLabs' reference documentation at https://docs.leolabs.space/ is behind a
+  customer login (Document360), so the auth model below was derived from LeoLabs' own
+  published Python client (PyPI `leolabs` 0.1.22, `leolabs/cli/utils.py`) rather than
+  from the docs.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  model: Long-lived access key + secret key pair issued from the LeoLabs Platform.
+    There is no OAuth or token-exchange step on the v1 Platform API itself; the OAuth /
+    OIDC surface at auth.leolabs.space is the Okta org that fronts interactive login to
+    the LeoLabs Platform and documentation, not API authorization.
+schemes:
+- name: leolabsKeyPair
+  type: apiKey
+  in: header
+  parameter: Authorization
+  format: 'basic {accessKey}:{secretKey}'
+  description: |
+    LeoLabs access key / secret key pair, sent as `Authorization: basic <accessKey>:<secretKey>`.
+    Despite the `basic` prefix this is not RFC 7617 HTTP Basic — the official LeoLabs client sends
+    the two keys colon-joined and unencoded, with no base64 step. Keys are issued from the LeoLabs
+    Platform (https://platform.leolabs.space/).
+  credential_sources:
+  - kind: environment
+    variables:
+    - LEOLABS_ACCESS_KEY
+    - LEOLABS_SECRET_KEY
+  - kind: file
+    path: ~/.leolabs/config
+    section: credentials
+    keys:
+    - access_key
+    - secret_key
+  - kind: cli
+    command: leolabs configure
+  sources:
+  - openapi/leo-labs-platform-openapi.yml
+  - https://pypi.org/project/leolabs/0.1.22/
+interactive_login:
+  provider: Okta
+  issuer: https://auth.leolabs.space
+  discovery: https://auth.leolabs.space/.well-known/openid-configuration
+  applies_to: LeoLabs Platform and documentation sign-in (not the v1 Platform API key pair)
+  see: scopes/leo-labs-scopes.yml
