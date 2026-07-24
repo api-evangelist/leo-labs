@@ -1,0 +1,358 @@
+openapi: 3.0.3
+info:
+  title: LeoLabs Platform catalog instruments API
+  version: v1
+  description: 'The LeoLabs Platform API provides programmatic access to LeoLabs'' commercial low Earth orbit (LEO)
+
+    catalog: tracked space objects, radar measurements, orbital state vectors, TLEs, ephemeris propagation,
+
+    planned passes, and radar instrument tasking.
+
+
+    PROVENANCE: this description was DERIVED from LeoLabs'' own published Python client
+
+    (PyPI package `leolabs` 0.1.22, authored by "LeoLabs, Inc.", modules `leolabs/cli/commands.py`
+
+    and `leolabs/cli/utils.py`) plus the request/response examples in that package''s README.
+
+    It is NOT an official LeoLabs OpenAPI document — LeoLabs'' reference documentation
+
+    (https://docs.leolabs.space/) is behind a customer login, so the authoritative contract could not be
+
+    retrieved. Paths, methods, parameter names, the authorization header format and the response field
+
+    names below all come verbatim from that first-party source. Nothing was invented; where the source
+
+    did not reveal a type or a field it is simply absent here. The client was last published 2018-11-06,
+
+    so this reflects the v1 surface as of that release and may be incomplete relative to today''s API.
+
+    '
+  contact:
+    name: LeoLabs Support
+    email: support@leolabs.space
+    url: https://www.leolabs.space/
+  x-provenance:
+    method: derived
+    generated: '2026-07-19'
+    source: https://pypi.org/project/leolabs/0.1.22/
+servers:
+- url: https://api.leolabs.space/v1
+  description: LeoLabs Platform API production
+security:
+- leolabsKeyPair: []
+tags:
+- name: instruments
+  description: LeoLabs radar instruments and their tasking.
+paths:
+  /instruments:
+    get:
+      tags:
+      - instruments
+      operationId: listInstruments
+      summary: List radar instruments
+      description: Lists the LeoLabs radar instruments and their siting and transmit characteristics.
+      responses:
+        '200':
+          description: The instruments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  instruments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Instrument'
+              example:
+                instruments:
+                - id: pfisr
+                  altitude: 213.0
+                  longitude: -147.47104
+                  latitude: 65.12992
+                  transmitFrequency: 450000000.0
+                  transmitPower: 2000000.0
+                - id: msr
+                  altitude: 855.0
+                  longitude: -103.233245
+                  latitude: 31.9643
+                  transmitFrequency: 440000000.0
+                  transmitPower: 65000.0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /instruments/{instrumentId}:
+    parameters:
+    - $ref: '#/components/parameters/InstrumentId'
+    get:
+      tags:
+      - instruments
+      operationId: getInstrument
+      summary: Get a radar instrument
+      responses:
+        '200':
+          description: The instrument.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instrument'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /instruments/{instrumentId}/statistics:
+    parameters:
+    - $ref: '#/components/parameters/InstrumentId'
+    get:
+      tags:
+      - instruments
+      operationId: getInstrumentStatistics
+      summary: Get statistics for a radar instrument
+      description: 'Returns statistics for a radar instrument. The LeoLabs client passes the literal value `all`
+
+        as the instrument id to request statistics across all instruments.
+
+        '
+      responses:
+        '200':
+          description: Statistics.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /instruments/{instrumentId}/tasks:
+    parameters:
+    - $ref: '#/components/parameters/InstrumentId'
+    get:
+      tags:
+      - instruments
+      operationId: listInstrumentTasks
+      summary: List tasks for a radar instrument
+      responses:
+        '200':
+          description: The tasks.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+      - instruments
+      operationId: createInstrumentTask
+      summary: Create a task on a radar instrument
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - startTime
+              - endTime
+              properties:
+                startTime:
+                  type: string
+                  format: date-time
+                endTime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskRef'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /instruments/{instrumentId}/tasks/{taskId}:
+    parameters:
+    - $ref: '#/components/parameters/InstrumentId'
+    - $ref: '#/components/parameters/TaskId'
+    get:
+      tags:
+      - instruments
+      operationId: getInstrumentTask
+      summary: Get a radar instrument task
+      responses:
+        '200':
+          description: The task.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /instruments/{instrumentId}/tasks/{taskId}/measurements:
+    parameters:
+    - $ref: '#/components/parameters/InstrumentId'
+    - $ref: '#/components/parameters/TaskId'
+    get:
+      tags:
+      - instruments
+      operationId: listInstrumentTaskMeasurements
+      summary: List measurements collected by a task
+      responses:
+        '200':
+          description: The measurements.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  measurements:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Measurement'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    MeasurementCorrection:
+      type: object
+      description: A correction applied to a raw measurement.
+      properties:
+        source:
+          type: string
+          description: Correction source, e.g. `leolabs`, `iri16`.
+        type:
+          type: string
+          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
+        value:
+          type: number
+        error:
+          type: number
+    Instrument:
+      type: object
+      description: A LeoLabs radar instrument.
+      properties:
+        id:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        altitude:
+          type: number
+        transmitFrequency:
+          type: number
+        transmitPower:
+          type: number
+    Measurement:
+      type: object
+      description: A single radar measurement of a catalog object.
+      properties:
+        id:
+          type: integer
+        catalogNumber:
+          type: string
+        noradCatalogNumber:
+          type: integer
+        instrument:
+          type: string
+        experiment:
+          type: integer
+        beam:
+          type: integer
+        group:
+          type: integer
+        targetPass:
+          type: integer
+        snr:
+          type: number
+        integrationTime:
+          type: number
+        transmittedAt:
+          type: string
+          format: date-time
+        receivedAt:
+          type: string
+          format: date-time
+        measuredAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        values:
+          $ref: '#/components/schemas/MeasurementValues'
+        corrected:
+          $ref: '#/components/schemas/MeasurementValues'
+        corrections:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementCorrection'
+    MeasurementValues:
+      type: object
+      description: Raw or corrected radar observables for a measurement.
+      properties:
+        range:
+          type: number
+        rangeError:
+          type: number
+        doppler:
+          type: number
+        dopplerError:
+          type: number
+        azimuth:
+          type: number
+        elevation:
+          type: number
+        rcs:
+          type: number
+          description: Radar cross section.
+    TaskRef:
+      type: object
+      description: A reference to a created tasking request.
+      properties:
+        id:
+          type: integer
+    Error:
+      type: object
+      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
+
+        response body cannot be parsed as JSON, indicating a top-level `error` member.
+
+        '
+      properties:
+        error:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid LeoLabs access key / secret key pair.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    InstrumentId:
+      name: instrumentId
+      in: path
+      required: true
+      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
+      schema:
+        type: string
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Task id.
+      schema:
+        type: string
+  securitySchemes:
+    leolabsKeyPair:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'LeoLabs access key / secret key pair, sent as `Authorization: basic <accessKey>:<secretKey>`.
+
+        Despite the `basic` prefix this is not RFC 7617 HTTP Basic — the LeoLabs client sends the two
+
+        keys colon-joined and unencoded. Keys are issued from the LeoLabs Platform
+
+        (https://platform.leolabs.space/) and the official client reads them from the
+
+        `LEOLABS_ACCESS_KEY` and `LEOLABS_SECRET_KEY` environment variables or from `~/.leolabs/config`.
+
+        '
