@@ -1,25 +1,141 @@
 aid: leo-labs
-name: Leo Labs
-description: Leo Labs is a company surfaced as a portfolio company of insight-partners and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+name: LeoLabs
+description: 'LeoLabs is a commercial space situational awareness company that operates
+  a global network of phased-array radars and a cloud analytics platform delivering
+  what it calls Persistent Orbital Intelligence for low Earth orbit. It independently
+  tracks more than 23,000 objects in LEO and turns those radar observations into a
+  commercial catalog, orbital state vectors, conjunction alerts, maneuver detection,
+  pattern-of-life analysis and launch support for satellite operators, insurers, defense
+  and civil space agencies. Customers reach the data either through the LeoLabs Platform
+  web interface or, as LeoLabs describes it, "a suite of full-featured RESTful APIs
+  for ground system integration and automation at scale" — the v1 Platform API over
+  the catalog, radar measurements, state vectors, TLEs, ephemeris propagation and radar
+  tasking. The company is backed by Insight Partners.'
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://leolabs.space/wp-content/uploads/2025/12/leolabs-badge-scaled.png
 url: https://raw.githubusercontent.com/api-evangelist/leo-labs/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - insight-partners
-x-tier: stub
+x-tier: profiled
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Space
+- Satellites
+- Space Situational Awareness
+- Space Traffic Management
+- Orbital Data
+- Radar
+- Aerospace
+- Defense
+- Geospatial
+apis:
+- aid: leo-labs:leo-labs-catalog-api
+  name: LeoLabs catalog API
+  description: LeoLabs catalog of tracked LEO objects, their measurements, states and propagations.
+  humanURL: https://www.leolabs.space/platform/
+  baseURL: https://api.leolabs.space/v1
+  tags:
+  - catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/leo-labs-catalog-api-openapi.yml
+  - type: DataModel
+    url: data-model/leo-labs-data-model.yml
+  - type: ErrorCatalog
+    url: errors/leo-labs-problem-types.yml
+  - type: Conventions
+    url: conventions/leo-labs-conventions.yml
+  - type: Documentation
+    url: https://docs.leolabs.space/
+- aid: leo-labs:leo-labs-instruments-api
+  name: LeoLabs instruments API
+  description: LeoLabs radar instruments and their tasking.
+  humanURL: https://www.leolabs.space/platform/
+  baseURL: https://api.leolabs.space/v1
+  tags:
+  - instruments
+  properties:
+  - type: OpenAPI
+    url: openapi/leo-labs-instruments-api-openapi.yml
+  - type: DataModel
+    url: data-model/leo-labs-data-model.yml
+  - type: ErrorCatalog
+    url: errors/leo-labs-problem-types.yml
+  - type: Conventions
+    url: conventions/leo-labs-conventions.yml
+  - type: Documentation
+    url: https://docs.leolabs.space/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/leo-labs-domain-security.yml
 - type: Website
   url: https://www.leolabs.space/
+- type: DeveloperPortal
+  url: https://platform.leolabs.space/
+- type: Documentation
+  url: https://docs.leolabs.space/
+- type: SignUp
+  url: https://platform.leolabs.space/
+- type: Blog
+  url: https://www.leolabs.space/newsroom/
+- type: BlogRSS
+  url: https://www.leolabs.space/newsroom/feed/
+- type: Support
+  url: mailto:support@leolabs.space
+- type: TermsOfService
+  url: https://www.leolabs.space/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.leolabs.space/privacy-policy/
+- type: Security
+  url: https://www.leolabs.space/vulnerability-disclosure/
+- type: VulnerabilityDisclosure
+  url: security/leo-labs-vulnerability-disclosure.yml
+- type: Authentication
+  url: authentication/leo-labs-authentication.yml
+- type: OAuthScopes
+  url: scopes/leo-labs-scopes.yml
+- type: WellKnown
+  url: well-known/leo-labs-well-known.yml
+- type: Packages
+  url: packages/leo-labs-packages.yml
+- type: SDKs
+  url: packages/leo-labs-packages.yml
+- type: CLI
+  url: cli/leo-labs-cli.yml
+- type: MCPServer
+  url: mcp/leo-labs-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/leo-labs-llms.txt
+- type: Lifecycle
+  url: lifecycle/leo-labs-lifecycle.yml
+- type: Conformance
+  url: conformance/leo-labs-conformance.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
