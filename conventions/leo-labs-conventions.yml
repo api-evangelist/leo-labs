@@ -1,0 +1,99 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+source_note: Derived from the OpenAPI in this repo, which was itself derived from LeoLabs'
+  own published Python client (PyPI `leolabs` 0.1.22). LeoLabs' reference documentation
+  is login-gated, so anything the client did not exercise is recorded as `unknown` rather
+  than guessed.
+api: LeoLabs Platform API v1
+base_url: https://api.leolabs.space/v1
+authentication:
+  style: api-key-pair
+  transport: Authorization header
+  format: 'basic {accessKey}:{secretKey}'
+  see: authentication/leo-labs-authentication.yml
+idempotency:
+  supported: unknown
+  header: null
+  note: No idempotency key header is sent by the official client and no idempotency
+    semantics are documented on any public LeoLabs surface. Both write operations
+    (createCatalogObjectTask, createInstrumentTask) are plain POSTs that return a new
+    task id, so a retried request is expected to create a second task. No `Idempotency`
+    pointer is emitted for this provider.
+pagination:
+  style: none-observed
+  note: The official client issues unpaged GETs against collection resources and reads
+    a single top-level array (`objects`, `states`, `measurements`, `instruments`, `tles`).
+    Result sets are instead narrowed by time span (`startTime`/`endTime`) or by `latest=1`.
+time_windowing:
+  parameters:
+  - startTime
+  - endTime
+  format: ISO 8601 UTC, e.g. 2017-11-08T00:00:00Z
+  shortcut:
+    parameter: latest
+    value: 1
+    applies_to: listCatalogObjectStates
+    description: Return only the most recent state vector instead of a time span.
+  limits:
+  - operation: getCatalogObjectStatePropagation
+    limit: Propagation is supported up to plus or minus 7 days from the state timestamp.
+resource_identifiers:
+- entity: CatalogObject
+  identifier: catalogNumber
+  shape: LeoLabs catalog number with an `L` prefix, e.g. `L335`
+  alternate: noradCatalogNumber (integer, e.g. 27386) resolved via searchCatalogObjects
+  wildcard: 'The literal `all` is accepted in place of a catalog number by
+    listCatalogObjectStates, listCatalogObjectPlannedPasses and getCatalogObjectStatistics.'
+- entity: Instrument
+  identifier: id
+  shape: short lowercase radar site code, e.g. `pfisr`, `msr`
+  wildcard: The literal `all` is accepted by getInstrumentStatistics.
+field_conventions:
+  case: lowerCamelCase
+  timestamps: ISO 8601; entities carry createdAt / updatedAt, measurements additionally
+    carry transmittedAt / receivedAt / measuredAt
+  units: SI — metres, metres per second, seconds, hertz, watts, degrees
+  reference_frames: State vectors and propagations are expressed per named frame
+    (`EME2000`, `TNW`) under a `frames` map.
+  raw_vs_corrected: Measurements carry both `values` (raw observables) and `corrected`
+    (bias-corrected), plus a `corrections[]` audit trail naming the correction source
+    and type.
+request_encoding:
+  reads: GET with query parameters
+  writes: POST with application/x-www-form-urlencoded body (as sent by the official client)
+  responses: application/json
+error_envelope:
+  format: json
+  shape: top-level `error` member
+  rfc9457: false
+  see: errors/leo-labs-problem-types.yml
+retries:
+  client_behavior: The official LeoLabs client retries any response outside 200-399 up to
+    5 times with no backoff before surfacing the failure.
+  server_guidance: unknown
+  caution: Because writes are not known to be idempotent, blind retry of
+    createCatalogObjectTask / createInstrumentTask can duplicate tasking requests.
+rate_limiting:
+  documented: false
+  headers_observed: none
+  note: No public rate-limit documentation or response headers could be observed on the
+    unauthenticated surface.
+versioning:
+  style: uri-path
+  current: v1
+  see: lifecycle/leo-labs-lifecycle.yml
+request_tracing:
+  request_id_header: unknown
+expansion_and_sparse_fields:
+  supported: unknown
+  note: The client performs one client-side join — getCatalogObjectState fetches
+    /states/{id}/tles and merges the first TLE into the state response as `tle` — which
+    suggests the API itself does not expand related resources.
+metadata:
+  user_defined_metadata: unknown
+cross_links:
+  errors: errors/leo-labs-problem-types.yml
+  lifecycle: lifecycle/leo-labs-lifecycle.yml
+  authentication: authentication/leo-labs-authentication.yml
+  data_model: data-model/leo-labs-data-model.yml

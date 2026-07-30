@@ -1,0 +1,16 @@
+{
+  "provider": "leo-labs",
+  "sources": [
+    "leo-labs-catalog-api-openapi.yml",
+    "leo-labs-instruments-api-openapi.yml"
+  ],
+  "outputs": [
+    "leo-labs-catalog-api-openapi.yml",
+    "leo-labs-instruments-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

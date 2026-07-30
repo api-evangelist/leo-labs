@@ -1,0 +1,254 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+api: LeoLabs Platform API v1
+entities:
+- name: CatalogObject
+  description: An object tracked in the LeoLabs LEO catalog.
+  primary_key: catalogNumber
+  key_shape: LeoLabs catalog number with an `L` prefix, e.g. L335
+  alternate_keys:
+  - noradCatalogNumber
+  fields:
+  - catalogNumber
+  - noradCatalogNumber
+  - name
+  operations:
+  - listCatalogObjects
+  - getCatalogObject
+  - searchCatalogObjects
+  relationships:
+  - type: has_many
+    target: State
+    via: catalogNumber
+    path: /catalog/objects/{catalogNumber}/states
+  - type: has_many
+    target: Measurement
+    via: catalogNumber
+    path: /catalog/objects/{catalogNumber}/measurements
+  - type: has_many
+    target: Task
+    via: catalogNumber
+    path: /catalog/objects/{catalogNumber}/tasks
+  - type: has_many
+    target: Pass
+    via: catalogNumber
+    path: /catalog/objects/{catalogNumber}/passes/planned
+- name: State
+  description: An orbital state vector (position, velocity, covariance) for a catalog object
+    at an instant, per reference frame.
+  primary_key: id
+  fields:
+  - id
+  - catalogNumber
+  - noradCatalogNumber
+  - timestamp
+  - createdAt
+  - updatedAt
+  - frames
+  - coefficients
+  operations:
+  - listCatalogObjectStates
+  - getCatalogObjectState
+  relationships:
+  - type: belongs_to
+    target: CatalogObject
+    via: catalogNumber
+  - type: has_many
+    target: StateFrame
+    via: frames
+    note: Keyed by frame name, e.g. EME2000, TNW.
+  - type: has_many
+    target: Tle
+    via: stateId
+    path: /catalog/objects/{catalogNumber}/states/{stateId}/tles
+  - type: has_many
+    target: Propagation
+    via: stateId
+    path: /catalog/objects/{catalogNumber}/states/{stateId}/propagations
+- name: StateFrame
+  description: Position, velocity, covariance and extended covariance in one reference frame.
+  primary_key: null
+  fields:
+  - position
+  - velocity
+  - covariance
+  - covarianceExtended
+  relationships:
+  - type: belongs_to
+    target: State
+    via: frames
+- name: Tle
+  description: A two-line element set derived from a LeoLabs state vector.
+  fields:
+  - catalogNumber
+  operations:
+  - listCatalogObjectStateTles
+  relationships:
+  - type: belongs_to
+    target: State
+    via: stateId
+  - type: belongs_to
+    target: CatalogObject
+    via: catalogNumber
+- name: Propagation
+  description: A propagated ephemeris generated from a state vector, up to plus or minus
+    seven days.
+  fields:
+  - state
+  - startTime
+  - endTime
+  - timestep
+  - frame
+  - propagation
+  operations:
+  - getCatalogObjectStatePropagation
+  relationships:
+  - type: belongs_to
+    target: State
+    via: state
+- name: Measurement
+  description: A single radar observation of a catalog object by an instrument, carrying raw
+    and bias-corrected observables.
+  primary_key: id
+  fields:
+  - id
+  - catalogNumber
+  - noradCatalogNumber
+  - instrument
+  - experiment
+  - beam
+  - group
+  - targetPass
+  - snr
+  - integrationTime
+  - transmittedAt
+  - receivedAt
+  - measuredAt
+  - updatedAt
+  - values
+  - corrected
+  - corrections
+  operations:
+  - listCatalogObjectMeasurements
+  - listInstrumentTaskMeasurements
+  relationships:
+  - type: belongs_to
+    target: CatalogObject
+    via: catalogNumber
+  - type: belongs_to
+    target: Instrument
+    via: instrument
+  - type: belongs_to
+    target: Task
+    via: task
+    note: Reachable through /instruments/{instrumentId}/tasks/{taskId}/measurements.
+  - type: has_one
+    target: MeasurementValues
+    via: values
+  - type: has_one
+    target: MeasurementValues
+    via: corrected
+  - type: has_many
+    target: MeasurementCorrection
+    via: corrections
+- name: MeasurementValues
+  description: Radar observables — range, doppler, azimuth, elevation, RCS — with errors.
+  fields:
+  - range
+  - rangeError
+  - doppler
+  - dopplerError
+  - azimuth
+  - elevation
+  - rcs
+- name: MeasurementCorrection
+  description: A single correction applied to a raw measurement, with its source and type.
+  fields:
+  - source
+  - type
+  - value
+  - error
+  known_sources:
+  - leolabs
+  - iri16
+  known_types:
+  - doppler_bias
+  - range_bias
+  - ionospheric
+- name: Instrument
+  description: A LeoLabs phased-array radar instrument, with siting and transmit
+    characteristics.
+  primary_key: id
+  key_shape: short lowercase site code, e.g. pfisr, msr
+  fields:
+  - id
+  - latitude
+  - longitude
+  - altitude
+  - transmitFrequency
+  - transmitPower
+  operations:
+  - listInstruments
+  - getInstrument
+  - getInstrumentStatistics
+  relationships:
+  - type: has_many
+    target: Task
+    via: instrument
+    path: /instruments/{instrumentId}/tasks
+  - type: has_many
+    target: Measurement
+    via: instrument
+- name: Task
+  description: A tasking request against the radar network, created either against a catalog
+    object or directly against an instrument.
+  primary_key: id
+  fields:
+  - id
+  - startTime
+  - endTime
+  - priority
+  operations:
+  - createCatalogObjectTask
+  - createInstrumentTask
+  - listInstrumentTasks
+  - getInstrumentTask
+  relationships:
+  - type: belongs_to
+    target: Instrument
+    via: instrumentId
+  - type: belongs_to
+    target: CatalogObject
+    via: catalogNumber
+  - type: has_many
+    target: Measurement
+    via: taskId
+    path: /instruments/{instrumentId}/tasks/{taskId}/measurements
+- name: Pass
+  description: A planned radar pass over a catalog object.
+  operations:
+  - listCatalogObjectPlannedPasses
+  relationships:
+  - type: belongs_to
+    target: CatalogObject
+    via: catalogNumber
+  note: The first-party client returns this payload unshaped, so field names could not be
+    derived.
+core_graph_summary: CatalogObject is the hub. It has many States (each State carries per-frame
+  position/velocity/covariance, yields TLEs, and can be propagated into an ephemeris) and many
+  Measurements. Measurements are produced by Instruments, optionally under a Task. Tasks can be
+  created either object-first (prioritise this object) or instrument-first (use this radar over
+  this window), and their measurements are retrievable per task.
+id_wildcards:
+- value: all
+  accepted_by:
+  - listCatalogObjectStates
+  - listCatalogObjectPlannedPasses
+  - getCatalogObjectStatistics
+  - getInstrumentStatistics
+  meaning: Operate across the whole catalog or all instruments rather than one entity.
+gaps:
+- Pass, Task and statistics payload shapes are not fully derivable from the first-party client.
+- No object reference documentation is public, so field-level types beyond those observed in
+  the client's README examples are unknown.

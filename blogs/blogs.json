@@ -1,0 +1,28 @@
+{
+  "repo": "leo-labs",
+  "feeds": [
+    {
+      "source": "https://platform.leolabs.space/",
+      "feed_url": "https://platform.leolabs.space/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://leolabs.space/feed/",
+      "feed_url": "https://leolabs.space/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.leolabs.space/newsroom/",
+      "feed_url": "https://leolabs.space/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-07-25T15:00:33Z"
+}

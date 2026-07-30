@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+source: https://auth.leolabs.space/.well-known/openid-configuration
+docs: https://auth.leolabs.space/.well-known/openid-configuration
+applies_to: LeoLabs Platform / documentation interactive sign-in (Okta org authorization
+  server). The v1 Platform API itself is authenticated with a LeoLabs access key + secret
+  key pair and exposes NO OAuth scope surface — see authentication/leo-labs-authentication.yml.
+authorization_server:
+  provider: Okta
+  issuer: https://auth.leolabs.space
+  authorization_endpoint: https://auth.leolabs.space/oauth2/v1/authorize
+  token_endpoint: https://auth.leolabs.space/oauth2/v1/token
+  userinfo_endpoint: https://auth.leolabs.space/oauth2/v1/userinfo
+  jwks_uri: https://auth.leolabs.space/oauth2/v1/keys
+  registration_endpoint: https://auth.leolabs.space/oauth2/v1/clients
+  pkce_methods:
+  - S256
+  grant_types:
+  - authorization_code
+  - implicit
+  - refresh_token
+  - password
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:openid:params:grant-type:ciba
+  token_endpoint_auth_methods:
+  - client_secret_basic
+  - client_secret_post
+  - client_secret_jwt
+  - private_key_jwt
+  - none
+scopes:
+- name: openid
+  description: Required for OpenID Connect; requests an ID token.
+- name: email
+  description: The user's email address and its verification status.
+- name: profile
+  description: Default profile claims for the user.
+- name: address
+  description: The user's postal address claim.
+- name: phone
+  description: The user's phone number claim.
+- name: offline_access
+  description: Issues a refresh token so the client can renew access without the user present.
+- name: groups
+  description: The Okta groups the user belongs to.
+notes:
+- These are the standard OpenID Connect and Okta org-authorization-server scopes advertised
+  by LeoLabs' discovery document. LeoLabs does not publish product-specific API scopes.

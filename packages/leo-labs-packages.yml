@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: searched
+source: https://pypi.org/project/leolabs/
+packages:
+- language: python
+  registry: pypi
+  name: leolabs
+  version: 0.1.22
+  url: https://pypi.org/project/leolabs/
+  install: pip install leolabs --upgrade
+  official: true
+  official_evidence: 'PyPI metadata lists author "LeoLabs, Inc." with author_email
+    support@leolabs.space and project URL https://github.com/leolabs-space/leo-api-python.'
+  description: Official LeoLabs Python client and `leolabs` command-line interface for
+    the v1 Platform API (catalog objects, measurements, state vectors, TLEs, ephemeris
+    propagation, planned passes, radar instruments and tasking).
+  provides_cli: true
+  cli_entry_point: leolabs
+  dependencies:
+  - requests
+  releases: 17
+  last_release: '2018-11-06'
+  maintained: false
+  maintenance_note: Last published 2018-11-06. The linked source repository
+    https://github.com/leolabs-space/leo-api-python returns 404 and the leolabs-space
+    GitHub organization currently exposes no public repositories, so this client appears
+    unmaintained even though it is genuinely first-party and still installable.
+registries_probed:
+- registry: pypi
+  result: found (leolabs)
+  negative:
+  - leolabs-api
+  - leolabs-sdk
+  - pyleolabs
+- registry: npm
+  result: none
+  note: The `@leolabs/*` npm scope belongs to an unrelated individual developer
+    (leolabs.org), not LeoLabs, Inc. — not counted as first-party.
+- registry: github
+  result: none
+  note: github.com/leolabs-space exists but publishes zero public repositories.
+- registry: maven-central
+  result: not probed
+- registry: nuget
+  result: not probed
+- registry: rubygems
+  result: not probed
+- registry: crates.io
+  result: not probed
+summary:
+  official_count: 1
+  languages:
+  - python

@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/leo-labs-platform-openapi.yml
+provider: leo-labs
+api: leo-labs:platform
+search_note: No provider-published Agent Skills or AGENTS.md could be found on any public
+  LeoLabs surface (leolabs.space, docs.leolabs.space is login-gated, and the leolabs-space
+  GitHub organization publishes no public repositories). These skills were generated from
+  the OpenAPI in this repo; every operationId referenced is present in that spec.
+skills:
+- name: leo-labs-track-object
+  file: leo-labs-track-object.md
+  description: Look up a space object in the LeoLabs catalog by NORAD or LeoLabs catalog
+    number and retrieve its latest orbital state vector, TLE and recent radar measurements.
+  writes: false
+  operations:
+  - searchCatalogObjects
+  - getCatalogObject
+  - listCatalogObjectStates
+  - getCatalogObjectState
+  - listCatalogObjectStateTles
+  - listCatalogObjectMeasurements
+- name: leo-labs-propagate-ephemeris
+  file: leo-labs-propagate-ephemeris.md
+  description: Propagate a LeoLabs orbital state vector forward or backward in time to
+    produce an ephemeris with covariance, for conjunction screening and pass planning.
+  writes: false
+  operations:
+  - searchCatalogObjects
+  - listCatalogObjectStates
+  - getCatalogObjectStatePropagation
+  - listCatalogObjectPlannedPasses
+- name: leo-labs-task-radar
+  file: leo-labs-task-radar.md
+  description: Request priority tasking of the LeoLabs radar network for a catalog object or
+    a named instrument, then retrieve the measurements the task produced.
+  writes: true
+  requires_human_confirmation: true
+  consequence: Commits physical radar capacity; the create operations are not known to be
+    idempotent, so a retry can duplicate a tasking request.
+  operations:
+  - searchCatalogObjects
+  - getCatalogObject
+  - listInstruments
+  - createCatalogObjectTask
+  - createInstrumentTask
+  - listInstrumentTasks
+  - getInstrumentTask
+  - listInstrumentTaskMeasurements
+  - getInstrumentStatistics
+shared_rules:
+  authentication: 'Authorization: basic {accessKey}:{secretKey} — colon-joined and unencoded,
+    NOT RFC 7617 HTTP Basic. Keys from LEOLABS_ACCESS_KEY / LEOLABS_SECRET_KEY.'
+  errors: Plain JSON with a top-level `error` member; not RFC 9457.
+  idempotency: Not supported. Reads are safe to retry; the two POST task-create operations
+    are not.
+  pagination: None. Bound result sets with startTime/endTime or latest=1.
+  timestamps: ISO 8601 UTC.

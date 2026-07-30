@@ -1,0 +1,98 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+source_note: Assertions are derived from the OpenAPI in this repo, the OIDC discovery
+  document at auth.leolabs.space, and live probes. LeoLabs' customer documentation is
+  login-gated; nothing here is asserted from marketing copy.
+standards:
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  scope: Interactive sign-in to the LeoLabs Platform and documentation (Okta org), NOT the
+    v1 Platform API.
+  evidence: https://auth.leolabs.space/.well-known/openid-configuration returns 200 with a
+    conformant discovery document (issuer, authorization/token/userinfo endpoints, jwks_uri).
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  scope: Same interactive sign-in surface as above.
+  evidence: Discovery advertises authorization_code, refresh_token, device_code and CIBA
+    grants, S256 PKCE, and private_key_jwt / client_secret_* token endpoint auth methods.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on api.leolabs.space;
+    metadata is published only via the OIDC discovery path.
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on www.leolabs.space, api.leolabs.space
+    and platform.leolabs.space, though a disclosure policy page is published at
+    https://www.leolabs.space/vulnerability-disclosure/.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: Errors are a plain JSON object with a top-level `error` member; no
+    application/problem+json content type is used. See errors/leo-labs-problem-types.yml.
+- id: rfc9727
+  name: api-catalog well-known URI
+  conforms: false
+  evidence: /.well-known/api-catalog does not resolve to a catalog document on any probed
+    host.
+- id: idempotency
+  name: Idempotency keys for unsafe methods
+  conforms: false
+  evidence: No idempotency key header is sent by the official client and none is documented;
+    both POST operations create new task ids. See conventions/leo-labs-conventions.yml.
+- id: pagination
+  name: Collection pagination
+  conforms: false
+  evidence: No cursor, page or limit parameter appears in the first-party client; result
+    sets are bounded by startTime/endTime or latest=1 instead.
+- id: openapi
+  name: OpenAPI description published by the provider
+  conforms: false
+  evidence: No machine-readable API description is published on any public LeoLabs host;
+    the spec in this repo is derived by API Evangelist from LeoLabs' own client library.
+- id: rest
+  name: Resource-oriented HTTP/JSON
+  conforms: true
+  evidence: Hierarchical noun-based resources (/catalog/objects/{cn}/states/{id}/propagations,
+    /instruments/{id}/tasks/{taskId}/measurements), GET for reads and POST for creates,
+    JSON responses throughout.
+- id: iso8601
+  name: ISO 8601 timestamps
+  conforms: true
+  evidence: All time parameters and timestamp fields use ISO 8601 UTC, e.g.
+    2017-11-08T00:00:00Z.
+domain_standards:
+- id: norad-catalog-number
+  name: NORAD catalog number interoperability
+  conforms: true
+  evidence: Catalog objects carry noradCatalogNumber and searchCatalogObjects resolves a
+    NORAD number to a LeoLabs catalog number.
+- id: tle
+  name: Two-line element sets
+  conforms: true
+  evidence: GET /catalog/objects/{catalogNumber}/states/{stateId}/tles returns TLEs derived
+    from LeoLabs state vectors.
+- id: eme2000
+  name: EME2000 / J2000 reference frame
+  conforms: true
+  evidence: State vectors and propagations are published in the EME2000 frame (alongside
+    the TNW local frame).
+- id: ccsds-oem
+  name: CCSDS Orbit Ephemeris Message
+  conforms: unknown
+  evidence: Ephemeris is returned as a JSON propagation array; no CCSDS OEM/OMM/CDM export
+    is visible on the public surface. LeoLabs markets conjunction alerts, but whether they
+    are emitted as CCSDS CDMs could not be confirmed without documentation access.
+compliance_certifications:
+  published: false
+  probed:
+  - url: https://trust.leolabs.space/
+    result: NXDOMAIN
+  - url: https://www.leolabs.space/security/
+    result: 404
+  note: No trust center and no named certifications (SOC 2, ISO 27001, FedRAMP, etc.) are
+    published on LeoLabs' public site. No `Compliance` or `TrustCenter` pointer is emitted.

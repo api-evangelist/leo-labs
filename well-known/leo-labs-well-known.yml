@@ -1,0 +1,49 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of LeoLabs hosts
+hosts:
+- host: https://api.leolabs.space
+  note: v1 Platform API host. Unauthenticated requests to the host root are redirected to
+    the Okta sign-in at auth.leolabs.space. No /.well-known/ documents are served.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://auth.leolabs.space
+  note: Okta org that fronts interactive sign-in to the LeoLabs Platform and documentation.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: leo-labs-openid-configuration.json
+    issuer: https://auth.leolabs.space
+- host: https://www.leolabs.space
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 301
+    note: Redirect to the marketing site, not an RFC 9727 API catalog document.
+  - path: /llms.txt
+    status: 404
+- host: https://platform.leolabs.space
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /llms.txt
+    status: 404
+summary:
+  security_txt: false
+  openid_configuration: true
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  llms_txt: false

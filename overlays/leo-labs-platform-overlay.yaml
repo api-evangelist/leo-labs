@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the LeoLabs Platform API
+  version: 1.0.0
+extends: ../openapi/leo-labs-platform-openapi.yml
+x-provenance:
+  generated: '2026-07-19'
+  method: generated
+  source: API Evangelist enrichment pipeline
+  note: Captures API Evangelist's additive annotations on top of the derived LeoLabs
+    OpenAPI. The underlying spec is never mutated.
+actions:
+- target: $.info
+  description: Record the catalog identity and provenance of this description.
+  update:
+    x-apis-io-provider: leo-labs
+    x-apis-io-api: leo-labs:platform
+    x-provenance-warning: This description was reverse-derived by API Evangelist from
+      LeoLabs' own published Python client (PyPI leolabs 0.1.22, last released 2018-11-06).
+      LeoLabs does not publish a machine-readable API description. Treat it as a faithful
+      but possibly incomplete map of the v1 surface, not an authoritative contract.
+- target: $.info
+  description: Link the artifacts this repo derives alongside the spec.
+  update:
+    x-artifacts:
+      authentication: ../authentication/leo-labs-authentication.yml
+      conventions: ../conventions/leo-labs-conventions.yml
+      errors: ../errors/leo-labs-problem-types.yml
+      data_model: ../data-model/leo-labs-data-model.yml
+      lifecycle: ../lifecycle/leo-labs-lifecycle.yml
+      conformance: ../conformance/leo-labs-conformance.yml
+      mcp: ../mcp/leo-labs-mcp.yml
+      cli: ../cli/leo-labs-cli.yml
+      packages: ../packages/leo-labs-packages.yml
+      skills: ../skills/_index.yml
+- target: $.paths[*][?(@.operationId)]
+  description: Default every operation to a read-safe agentic access class; write
+    operations are re-classified below.
+  update:
+    x-agentic-access:
+      action-class: read
+      consequence: none
+      escalation: none
+- target: $.paths['/catalog/objects/{catalogNumber}/tasks'].post
+  description: Tasking a catalog object commits physical radar capacity and is not known to
+    be idempotent.
+  update:
+    x-agentic-access:
+      action-class: write
+      consequence: commits physical radar network capacity for a time window
+      idempotent: false
+      escalation: human-confirmation
+- target: $.paths['/instruments/{instrumentId}/tasks'].post
+  description: Tasking an instrument directly commits physical radar capacity and is not
+    known to be idempotent.
+  update:
+    x-agentic-access:
+      action-class: write
+      consequence: commits physical radar network capacity on a named instrument
+      idempotent: false
+      escalation: human-confirmation
+- target: $.paths['/catalog/objects/{catalogNumber}/states/{stateId}/propagations'].get
+  description: Flag the documented propagation horizon so clients do not request beyond it.
+  update:
+    x-constraints:
+      max_horizon: plus or minus 7 days from the state timestamp
+- target: $.components.securitySchemes.leolabsKeyPair
+  description: Warn that the `basic` prefix is not RFC 7617 HTTP Basic.
+  update:
+    x-auth-note: The Authorization value is the literal string `basic ` followed by
+      accessKey:secretKey, unencoded. Do not base64-encode it as RFC 7617 HTTP Basic would
+      require; generic HTTP clients that implement Basic auth natively will send the wrong
+      value.
+- target: $.components.schemas.Measurement
+  description: Explain the raw-versus-corrected duality so consumers pick the right field.
+  update:
+    x-usage-note: '`values` holds raw observables as measured; `corrected` holds the same
+      observables after bias and ionospheric corrections; `corrections[]` is the audit trail
+      naming each correction source and type. Analysis should normally read `corrected`.'

@@ -1,0 +1,54 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+source_note: Derived from the OpenAPI in this repo plus live probes of LeoLabs' public
+  hosts. LeoLabs' reference documentation is login-gated, so any versioning, deprecation
+  or SLA commitments published only to customers are not visible here.
+versioning:
+  style: uri-path
+  current_version: v1
+  base_url: https://api.leolabs.space/v1
+  override_note: The official client honours a LEOLABS_BASE_URI environment variable, so
+    LeoLabs runs more than one addressable environment internally.
+  policy_published: false
+  policy_url: null
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: unknown
+  deprecation_header: unknown
+  rfc8594: unknown
+  deprecated_operations: []
+  note: No operation in the derived OpenAPI is marked deprecated and no public deprecation
+    policy could be found. No `Deprecation` pointer is emitted.
+status_page:
+  published: false
+  probed:
+  - url: https://status.leolabs.space/
+    result: NXDOMAIN
+  note: No public status page could be found. No `StatusPage` pointer is emitted.
+sla:
+  published: false
+  note: No public SLA. LeoLabs does publish an operational latency claim for the platform
+    ("2-minute latency for updated measurements") on https://www.leolabs.space/platform/,
+    which is a product characteristic rather than a contractual SLA.
+changelog:
+  published: false
+  probed:
+  - url: https://docs.leolabs.space/
+    result: 200 but login-gated (Document360)
+  note: Any release notes live behind the customer documentation login. No `ChangeLog`
+    pointer is emitted.
+support:
+  email: support@leolabs.space
+security_response:
+  see: security/leo-labs-vulnerability-disclosure.yml
+  note: The vulnerability disclosure policy is the one place LeoLabs publishes explicit,
+    dated response commitments (72-hour validation; 30/90/180-day remediation targets).
+client_lifecycle:
+- artifact: packages/leo-labs-packages.yml
+  package: leolabs (PyPI)
+  last_release: '2018-11-06'
+  status: unmaintained, still installable
+  linked_repo: https://github.com/leolabs-space/leo-api-python
+  linked_repo_status: 404

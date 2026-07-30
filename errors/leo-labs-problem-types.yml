@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leo-labs-platform-openapi.yml
+source_note: Derived from the OpenAPI in this repo (itself derived from LeoLabs' published
+  Python client). LeoLabs publishes no public error reference — docs.leolabs.space is
+  login-gated — so this catalog is deliberately thin rather than padded.
+format: json
+rfc9457: false
+content_type: application/json
+envelope:
+  shape: object
+  members:
+  - name: error
+    type: string
+    description: 'Error message. Evidenced by the official client''s fallback of
+      {"error": "unknown"} when a failed response body cannot be parsed as JSON.'
+success_range:
+  note: The official client treats any status from 200 through 399 as success and retries
+    everything else up to 5 times.
+problem_types:
+- status: 401
+  title: Unauthorized
+  detail: Missing or invalid LeoLabs access key / secret key pair.
+  remediation: Set LEOLABS_ACCESS_KEY and LEOLABS_SECRET_KEY, or run `leolabs configure`
+    to write ~/.leolabs/config. Keys are issued from https://platform.leolabs.space/.
+  source: openapi/leo-labs-platform-openapi.yml
+client_side_validation:
+  note: The official client raises these locally before any request is made; they are not
+    server error types but they shape the developer experience.
+  errors:
+  - message: Must provide either --catalog-number or --norad-catalog-number
+    applies_to:
+    - getCatalogObject
+    - listCatalogObjectMeasurements
+    - createCatalogObjectTask
+    - getCatalogObjectState
+    - getCatalogObjectStatePropagation
+  - message: Must provide --start-time and --end-time
+    applies_to:
+    - listCatalogObjectMeasurements
+    - createCatalogObjectTask
+    - listCatalogObjectStates
+    - createInstrumentTask
+  - message: Must provide --instrument
+    applies_to:
+    - getInstrument
+    - listInstrumentTasks
+    - createInstrumentTask
+    - getInstrumentTask
+    - listInstrumentTaskMeasurements
+  - message: Must provide --task
+    applies_to:
+    - getInstrumentTask
+    - listInstrumentTaskMeasurements
+  - message: 'Error finding Norad Catalog Number: {noradCatalogNumber}'
+    applies_to:
+    - searchCatalogObjects
+    description: Raised when a NORAD catalog number does not resolve to a LeoLabs catalog
+      object.
+  - message: Missing LeoLabs credentials. Please set the LEOLABS_ACCESS_KEY and
+      LEOLABS_SECRET_KEY environment variables, or run "leolabs configure".
+    applies_to:
+    - all operations
+gaps:
+- No public, enumerated error-code registry.
+- No RFC 9457 application/problem+json.
+- Server-side status codes beyond 401 could not be observed without credentials.

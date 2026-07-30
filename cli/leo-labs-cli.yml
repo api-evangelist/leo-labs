@@ -1,0 +1,128 @@
+generated: '2026-07-19'
+method: searched
+source: https://pypi.org/project/leolabs/
+cli:
+  name: leolabs
+  official: true
+  distributed_via: pypi
+  package: leolabs
+  version: 0.1.22
+  maintained: false
+  maintenance_note: Last published 2018-11-06; still installable from PyPI.
+  requirements:
+  - Python 2.7.9+ or 3.4+
+  - A LeoLabs Platform account (https://platform.leolabs.space/)
+install:
+- method: pip
+  command: pip install leolabs --upgrade
+configuration:
+  command: leolabs configure
+  prompts:
+  - Access Key
+  - Secret Key
+  config_file: ~/.leolabs/config
+  environment:
+  - LEOLABS_ACCESS_KEY
+  - LEOLABS_SECRET_KEY
+  - LEOLABS_BASE_URI
+  environment_note: LEOLABS_BASE_URI overrides the default base URI
+    https://api.leolabs.space/v1.
+resources:
+- resource: catalog
+  commands:
+  - name: list
+    summary: List catalog objects.
+    operation: listCatalogObjects
+  - name: get
+    summary: Get a catalog object by --catalog-number or --norad-catalog-number.
+    operation: getCatalogObject
+    flags:
+    - --catalog-number
+    - --norad-catalog-number
+  - name: get-measurements
+    summary: Get radar measurements for an object over a time span.
+    operation: listCatalogObjectMeasurements
+    flags:
+    - --catalog-number
+    - --norad-catalog-number
+    - --start-time
+    - --end-time
+  - name: create-task
+    summary: Request priority radar tasking for an object.
+    operation: createCatalogObjectTask
+    flags:
+    - --catalog-number
+    - --start-time
+    - --end-time
+  - name: planned-passes
+    summary: List planned radar passes for an object (or all objects).
+    operation: listCatalogObjectPlannedPasses
+  - name: list-states
+    summary: List orbital state vectors, by time span or --latest 1.
+    operation: listCatalogObjectStates
+    flags:
+    - --catalog-number
+    - --start-time
+    - --end-time
+    - --latest
+  - name: get-state
+    summary: Get one state vector; the client merges in the associated TLE.
+    operation: getCatalogObjectState
+    flags:
+    - --catalog-number
+    - --state
+  - name: get-statistics
+    summary: Get tracking statistics for an object (or the whole catalog).
+    operation: getCatalogObjectStatistics
+  - name: get-propagation
+    summary: Propagate ephemeris from a state vector (up to +/- 7 days).
+    operation: getCatalogObjectStatePropagation
+    flags:
+    - --catalog-number
+    - --state
+    - --start-time
+    - --end-time
+    - --timestep
+- resource: instruments
+  commands:
+  - name: list
+    summary: List LeoLabs radar instruments.
+    operation: listInstruments
+  - name: get
+    summary: Get one radar instrument.
+    operation: getInstrument
+    flags:
+    - --instrument
+  - name: get-statistics
+    summary: Get statistics for an instrument (or all instruments).
+    operation: getInstrumentStatistics
+  - name: list-tasks
+    summary: List tasks on an instrument.
+    operation: listInstrumentTasks
+  - name: create-task
+    summary: Create a task on an instrument.
+    operation: createInstrumentTask
+    flags:
+    - --instrument
+    - --start-time
+    - --end-time
+  - name: get-task
+    summary: Get one instrument task.
+    operation: getInstrumentTask
+  - name: get-task-measurements
+    summary: Get measurements collected by an instrument task.
+    operation: listInstrumentTaskMeasurements
+key_flows:
+- name: Look up an object by NORAD number and get its latest orbit
+  steps:
+  - leolabs configure
+  - leolabs catalog get --norad-catalog-number 27386
+  - leolabs catalog list-states --catalog-number L335 --latest 1
+- name: Propagate an ephemeris for conjunction screening
+  steps:
+  - leolabs catalog list-states --catalog-number L335 --latest 1
+  - leolabs catalog get-propagation --catalog-number L335 --state <stateId> --start-time
+    <iso8601> --end-time <iso8601> --timestep 60
+output:
+  format: json
+  note: Results are printed as JSON indented by 4 spaces.
