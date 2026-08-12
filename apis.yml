@@ -88,6 +88,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/leo-labs-platform-overlay.yaml
 - type: DomainSecurity
   url: security/leo-labs-domain-security.yml
 - type: Website
