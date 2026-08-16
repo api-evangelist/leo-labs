@@ -6,13 +6,14 @@
       "feed_url": "https://platform.leolabs.space/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     },
     {
       "source": "https://leolabs.space/feed/",
       "feed_url": "https://leolabs.space/feed/",
       "title": "",
-      "saved": 0,
+      "saved": 3,
       "method": "feed"
     },
     {
@@ -23,6 +24,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 12,
-  "fetched": "2026-08-06T14:08:46Z"
+  "post_count": 15,
+  "fetched": "2026-08-15T12:11:08Z"
 }
