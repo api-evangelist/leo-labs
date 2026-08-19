@@ -2,11 +2,10 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/leo-labs-platform-openapi.yml
-search_note: No official or hosted LeoLabs MCP server could be found — nothing on
-  leolabs.space, docs.leolabs.space, the leolabs-space GitHub organization (which
-  publishes zero public repositories), npm, or PyPI. The tool list below is a CANDIDATE
-  derived one-to-one from the operations in this repo's OpenAPI; it is not published by
-  LeoLabs.
+search_note: No official or hosted LeoLabs MCP server could be found — nothing on leolabs.space, docs.leolabs.space,
+  the leolabs-space GitHub organization (which publishes zero public repositories), npm, or PyPI. The
+  tool list below is a CANDIDATE derived one-to-one from the operations in this repo's OpenAPI; it is
+  not published by LeoLabs.
 server:
   name: leo-labs
   transport: http
@@ -15,7 +14,7 @@ server:
   auth:
     kind: api-key-pair
     header: Authorization
-    format: 'basic {accessKey}:{secretKey}'
+    format: basic {accessKey}:{secretKey}
     environment:
     - LEOLABS_ACCESS_KEY
     - LEOLABS_SECRET_KEY
@@ -72,8 +71,8 @@ write_tools:
 - name: create_catalog_object_task
   description: Request priority radar tasking for a catalog object over a time window.
   source_operation: openapi/leo-labs-platform-openapi.yml#createCatalogObjectTask
-  consequence: Consumes tasking capacity on a physical radar network and is NOT known to be
-    idempotent — a retry creates a second task. Should require human confirmation.
+  consequence: Consumes tasking capacity on a physical radar network and is NOT known to be idempotent
+    — a retry creates a second task. Should require human confirmation.
 - name: create_instrument_task
   description: Create a task on a specific radar instrument over a time window.
   source_operation: openapi/leo-labs-platform-openapi.yml#createInstrumentTask
@@ -81,3 +80,9 @@ write_tools:
 notes:
 - Reads are safe and time-bounded; agents should always pass startTime/endTime or latest=1.
 - The two write tools are separated deliberately so an agent runtime can gate them.
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,1174 @@
+{
+  "item": [
+    {
+      "id": "5f8da4bb-df13-4f93-9ba9-bb3f257ab71f",
+      "name": "instruments",
+      "description": {
+        "content": "LeoLabs radar instruments and their tasking.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b4dd842-f05d-40de-836c-6f6ad2142e14",
+          "name": "List radar instruments",
+          "request": {
+            "name": "List radar instruments",
+            "description": {
+              "content": "Lists the LeoLabs radar instruments and their siting and transmit characteristics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "instruments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06da02c5-e14d-43b8-9163-7de4c514237e",
+              "name": "The instruments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"instruments\": [\n    {\n      \"id\": \"pfisr\",\n      \"altitude\": 213,\n      \"longitude\": -147.47104,\n      \"latitude\": 65.12992,\n      \"transmitFrequency\": 450000000,\n      \"transmitPower\": 2000000\n    },\n    {\n      \"id\": \"msr\",\n      \"altitude\": 855,\n      \"longitude\": -103.233245,\n      \"latitude\": 31.9643,\n      \"transmitFrequency\": 440000000,\n      \"transmitPower\": 65000\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd0ca04a-35b2-4384-bd21-c2bec0bc3268",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c29afc49-0638-485e-a85a-640ccd678a40",
+          "name": "Get a radar instrument",
+          "request": {
+            "name": "Get a radar instrument",
+            "description": {},
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67060540-7630-4954-acc6-5ab8b2c81d23",
+              "name": "The instrument.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"latitude\": 8558.184570186204,\n  \"longitude\": 5062.81439975211,\n  \"altitude\": 2103.007239961624,\n  \"transmitFrequency\": 1261.2996343324135,\n  \"transmitPower\": 6986.037033563589\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90415ce2-8a57-42d1-b17f-1b40209ec8e2",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c33e8383-c64c-4abb-b687-e70fc29bb3c5",
+          "name": "Get statistics for a radar instrument",
+          "request": {
+            "name": "Get statistics for a radar instrument",
+            "description": {
+              "content": "Returns statistics for a radar instrument. The LeoLabs client passes the literal value `all`\nas the instrument id to request statistics across all instruments.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId",
+                "statistics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46633b68-ce92-4a18-a5dc-c0840026ec38",
+              "name": "Statistics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da5009bd-4fb2-46d8-a957-d21a7300e744",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e725396-af25-4fcb-bbc3-4ffaa0c2ffa2",
+          "name": "List tasks for a radar instrument",
+          "request": {
+            "name": "List tasks for a radar instrument",
+            "description": {},
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "878d8f09-f274-462a-9a6a-18efb13a9cb8",
+              "name": "The tasks.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c1cc2a4-1a52-4152-84eb-cff5d0d5ce86",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04fd7c7a-0d5d-4c08-9a5f-7eec3f1c84b3",
+          "name": "Create a task on a radar instrument",
+          "request": {
+            "name": "Create a task on a radar instrument",
+            "description": {},
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df0981d5-7bc4-4fa0-9ce7-00907162fe85",
+              "name": "The created task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "startTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "endTime",
+                      "value": "<dateTime>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 117\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70216bf6-28b6-4736-b31c-8e7d4f06cf9f",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "startTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "endTime",
+                      "value": "<dateTime>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d82d7638-3bdf-4eab-8c13-c683a0d40070",
+          "name": "Get a radar instrument task",
+          "request": {
+            "name": "Get a radar instrument task",
+            "description": {},
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId",
+                "tasks",
+                ":taskId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskId",
+                  "description": "(Required) Task id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60d18014-6ecd-40f8-a83d-3d9fcd5f1128",
+              "name": "The task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskId",
+                      "description": "(Required) Task id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f00ad9dc-2f4f-488b-afff-f1679e19e8c2",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskId",
+                      "description": "(Required) Task id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d791c21e-ed88-4e23-ac51-d230de505b5c",
+          "name": "List measurements collected by a task",
+          "request": {
+            "name": "List measurements collected by a task",
+            "description": {},
+            "url": {
+              "path": [
+                "instruments",
+                ":instrumentId",
+                "tasks",
+                ":taskId",
+                "measurements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instrumentId",
+                  "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskId",
+                  "description": "(Required) Task id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "199528fb-08cd-47ff-acac-006ae849f0f1",
+              "name": "The measurements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks",
+                    ":taskId",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskId",
+                      "description": "(Required) Task id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"measurements\": [\n    {\n      \"id\": 8903,\n      \"catalogNumber\": \"string\",\n      \"noradCatalogNumber\": 9417,\n      \"instrument\": \"string\",\n      \"experiment\": 1343,\n      \"beam\": 4968,\n      \"group\": 3138,\n      \"targetPass\": 3138,\n      \"snr\": 5106.455283788975,\n      \"integrationTime\": 6708.0032153377415,\n      \"transmittedAt\": \"2001-09-13T05:29:07.558Z\",\n      \"receivedAt\": \"1988-01-31T02:11:59.347Z\",\n      \"measuredAt\": \"2026-07-12T01:42:05.166Z\",\n      \"updatedAt\": \"1989-12-30T02:43:57.279Z\",\n      \"values\": {\n        \"range\": 102.99225474909579,\n        \"rangeError\": 2992.93194694643,\n        \"doppler\": 2241.10644554955,\n        \"dopplerError\": 6747.234547682048,\n        \"azimuth\": 7793.586808872486,\n        \"elevation\": 1847.7605275137976,\n        \"rcs\": 8722.164761117883\n      },\n      \"corrected\": {\n        \"range\": 3074.084059060843,\n        \"rangeError\": 552.8153521389822,\n        \"doppler\": 7438.934085008643,\n        \"dopplerError\": 2684.461929064055,\n        \"azimuth\": 4410.662019345419,\n        \"elevation\": 1533.8543413898487,\n        \"rcs\": 757.0286372728597\n      },\n      \"corrections\": [\n        {\n          \"source\": \"string\",\n          \"type\": \"string\",\n          \"value\": 7324.377031987036,\n          \"error\": 1673.508774382979\n        },\n        {\n          \"source\": \"string\",\n          \"type\": \"string\",\n          \"value\": 4013.4663826336414,\n          \"error\": 575.2897598054974\n        }\n      ]\n    },\n    {\n      \"id\": 686,\n      \"catalogNumber\": \"string\",\n      \"noradCatalogNumber\": 9891,\n      \"instrument\": \"string\",\n      \"experiment\": 5194,\n      \"beam\": 172,\n      \"group\": 2775,\n      \"targetPass\": 2078,\n      \"snr\": 528.9562236710366,\n      \"integrationTime\": 4780.724146422356,\n      \"transmittedAt\": \"1985-10-24T20:24:50.600Z\",\n      \"receivedAt\": \"1992-04-27T09:37:26.034Z\",\n      \"measuredAt\": \"2023-07-06T03:39:01.564Z\",\n      \"updatedAt\": \"1998-05-18T10:08:51.622Z\",\n      \"values\": {\n        \"range\": 6915.781643795711,\n        \"rangeError\": 7397.740230409418,\n        \"doppler\": 7826.29171703874,\n        \"dopplerError\": 6433.333136679128,\n        \"azimuth\": 1146.4159248431038,\n        \"elevation\": 4171.157355787931,\n        \"rcs\": 2337.442617212041\n      },\n      \"corrected\": {\n        \"range\": 9760.97154254132,\n        \"rangeError\": 5630.678113755813,\n        \"doppler\": 3369.7236684080167,\n        \"dopplerError\": 3907.649224014872,\n        \"azimuth\": 8646.504808730318,\n        \"elevation\": 1737.2852678438867,\n        \"rcs\": 8094.842007351967\n      },\n      \"corrections\": [\n        {\n          \"source\": \"string\",\n          \"type\": \"string\",\n          \"value\": 1983.1601834237001,\n          \"error\": 7534.466061324171\n        },\n        {\n          \"source\": \"string\",\n          \"type\": \"string\",\n          \"value\": 7922.414817248039,\n          \"error\": 8912.645190655698\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d89c8a70-2fe6-49e4-94be-f25006095ceb",
+              "name": "Missing or invalid LeoLabs access key / secret key pair.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    ":instrumentId",
+                    "tasks",
+                    ":taskId",
+                    "measurements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instrumentId",
+                      "description": "(Required) Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskId",
+                      "description": "(Required) Task id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.leolabs.space/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5f55354e-55cd-4804-aeb6-31f131b4681e",
+    "name": "LeoLabs Platform catalog instruments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LeoLabs Platform API provides programmatic access to LeoLabs' commercial low Earth orbit (LEO)\ncatalog: tracked space objects, radar measurements, orbital state vectors, TLEs, ephemeris propagation,\nplanned passes, and radar instrument tasking.\n\nPROVENANCE: this description was DERIVED from LeoLabs' own published Python client\n(PyPI package `leolabs` 0.1.22, authored by \"LeoLabs, Inc.\", modules `leolabs/cli/commands.py`\nand `leolabs/cli/utils.py`) plus the request/response examples in that package's README.\nIt is NOT an official LeoLabs OpenAPI document — LeoLabs' reference documentation\n(https://docs.leolabs.space/) is behind a customer login, so the authoritative contract could not be\nretrieved. Paths, methods, parameter names, the authorization header format and the response field\nnames below all come verbatim from that first-party source. Nothing was invented; where the source\ndid not reveal a type or a field it is simply absent here. The client was last published 2018-11-06,\nso this reflects the v1 surface as of that release and may be incomplete relative to today's API.\n\n\nContact Support:\n Name: LeoLabs Support\n Email: support@leolabs.space",
+      "type": "text/plain"
+    }
+  }
+}

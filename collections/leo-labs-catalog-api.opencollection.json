@@ -1,0 +1,310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeoLabs Platform catalog API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List catalog objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects"
+          },
+          "docs": "Lists the objects in the LeoLabs catalog."
+        },
+        {
+          "info": {
+            "name": "Search the catalog by NORAD catalog number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/search",
+            "params": [
+              {
+                "name": "noradCatalogNumber",
+                "value": "",
+                "type": "query",
+                "description": "The NORAD catalog number of the object, e.g. 27386 for ENVISAT."
+              }
+            ]
+          },
+          "docs": "Resolves a NORAD catalog number to a LeoLabs catalog object."
+        },
+        {
+          "info": {
+            "name": "Get a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "Retrieves a single catalog object by its LeoLabs catalog number."
+        },
+        {
+          "info": {
+            "name": "List radar measurements for a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/measurements",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC start of the requested time span, e.g. `2017-11-08T00:00:00Z`."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC end of the requested time span."
+              }
+            ]
+          },
+          "docs": "Returns the radar measurements collected for a catalog object over a time span."
+        },
+        {
+          "info": {
+            "name": "Request priority tasking for a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/tasks",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "startTime",
+                  "value": ""
+                },
+                {
+                  "name": "endTime",
+                  "value": ""
+                },
+                {
+                  "name": "priority",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Requests that the radar network prioritise tracking of this object over a time span."
+        },
+        {
+          "info": {
+            "name": "List planned passes for a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/passes/planned",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "Returns the planned radar passes for a catalog object. The LeoLabs client passes the literal\nvalue `all` as the catalog number to request planned passes across the whole catalog.\n"
+        },
+        {
+          "info": {
+            "name": "Get statistics for a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/statistics",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "Returns tracking statistics for a catalog object. The LeoLabs client passes the literal value\n`all` as the catalog number to request catalog-wide statistics.\n"
+        },
+        {
+          "info": {
+            "name": "List orbital state vectors for a catalog object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/states",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC start of the requested time span, e.g. `2017-11-08T00:00:00Z`."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC end of the requested time span."
+              },
+              {
+                "name": "latest",
+                "value": "",
+                "type": "query",
+                "description": "Set to 1 to return only the most recent state vector."
+              }
+            ]
+          },
+          "docs": "Returns orbital state vectors for a catalog object, either over a time span\n(`startTime`/`endTime`) or the most recent state (`latest=1`).\n"
+        },
+        {
+          "info": {
+            "name": "Get an orbital state vector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/states/:stateId",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "stateId",
+                "value": "",
+                "type": "path",
+                "description": "Orbital state vector id."
+              }
+            ]
+          },
+          "docs": "Retrieves a single orbital state vector by id."
+        },
+        {
+          "info": {
+            "name": "List TLEs associated with a state vector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/states/:stateId/tles",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "stateId",
+                "value": "",
+                "type": "path",
+                "description": "Orbital state vector id."
+              }
+            ]
+          },
+          "docs": "Returns the two-line element sets derived from a given orbital state vector."
+        },
+        {
+          "info": {
+            "name": "Propagate ephemeris from a state vector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/catalog/objects/:catalogNumber/states/:stateId/propagations",
+            "params": [
+              {
+                "name": "catalogNumber",
+                "value": "",
+                "type": "path",
+                "description": "LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "stateId",
+                "value": "",
+                "type": "path",
+                "description": "Orbital state vector id."
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC start of the requested time span, e.g. `2017-11-08T00:00:00Z`."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 UTC end of the requested time span."
+              },
+              {
+                "name": "timestep",
+                "value": "",
+                "type": "query",
+                "description": "Propagation timestep in seconds."
+              }
+            ]
+          },
+          "docs": "Propagates the orbit forward or backward from a given state vector and returns positions,\nvelocities and covariances at a fixed timestep. LeoLabs documents support for propagation up to\nplus or minus 7 days from the state timestamp.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

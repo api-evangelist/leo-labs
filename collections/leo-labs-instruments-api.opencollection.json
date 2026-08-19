@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LeoLabs Platform catalog instruments API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "instruments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List radar instruments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments"
+          },
+          "docs": "Lists the LeoLabs radar instruments and their siting and transmit characteristics."
+        },
+        {
+          "info": {
+            "name": "Get a radar instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "Get a radar instrument"
+        },
+        {
+          "info": {
+            "name": "Get statistics for a radar instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId/statistics",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "Returns statistics for a radar instrument. The LeoLabs client passes the literal value `all`\nas the instrument id to request statistics across all instruments.\n"
+        },
+        {
+          "info": {
+            "name": "List tasks for a radar instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId/tasks",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              }
+            ]
+          },
+          "docs": "List tasks for a radar instrument"
+        },
+        {
+          "info": {
+            "name": "Create a task on a radar instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId/tasks",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "startTime",
+                  "value": ""
+                },
+                {
+                  "name": "endTime",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a task on a radar instrument"
+        },
+        {
+          "info": {
+            "name": "Get a radar instrument task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId/tasks/:taskId",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "Task id."
+              }
+            ]
+          },
+          "docs": "Get a radar instrument task"
+        },
+        {
+          "info": {
+            "name": "List measurements collected by a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leolabs.space/v1/instruments/:instrumentId/tasks/:taskId/measurements",
+            "params": [
+              {
+                "name": "instrumentId",
+                "value": "",
+                "type": "path",
+                "description": "Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`."
+              },
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "Task id."
+              }
+            ]
+          },
+          "docs": "List measurements collected by a task"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
