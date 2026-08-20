@@ -52,6 +52,8 @@ apis:
   humanURL: https://www.leolabs.space/platform/
   baseURL: https://api.leolabs.space/v1
   tags:
+  - Catalog
+  tags_raw:
   - catalog
   properties:
   - type: OpenAPI
@@ -70,6 +72,8 @@ apis:
   humanURL: https://www.leolabs.space/platform/
   baseURL: https://api.leolabs.space/v1
   tags:
+  - Instruments
+  tags_raw:
   - instruments
   properties:
   - type: OpenAPI
