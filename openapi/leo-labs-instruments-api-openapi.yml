@@ -1,33 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: LeoLabs Platform catalog instruments API
+  title: LeoLabs Platform Instruments API
   version: v1
   description: 'The LeoLabs Platform API provides programmatic access to LeoLabs'' commercial low Earth orbit (LEO)
 
     catalog: tracked space objects, radar measurements, orbital state vectors, TLEs, ephemeris propagation,
 
-    planned passes, and radar instrument tasking.
-
-
-    PROVENANCE: this description was DERIVED from LeoLabs'' own published Python client
-
-    (PyPI package `leolabs` 0.1.22, authored by "LeoLabs, Inc.", modules `leolabs/cli/commands.py`
-
-    and `leolabs/cli/utils.py`) plus the request/response examples in that package''s README.
-
-    It is NOT an official LeoLabs OpenAPI document — LeoLabs'' reference documentation
-
-    (https://docs.leolabs.space/) is behind a customer login, so the authoritative contract could not be
-
-    retrieved. Paths, methods, parameter names, the authorization header format and the response field
-
-    names below all come verbatim from that first-party source. Nothing was invented; where the source
-
-    did not reveal a type or a field it is simply absent here. The client was last published 2018-11-06,
-
-    so this reflects the v1 surface as of that release and may be incomplete relative to today''s API.
-
-    '
+    planned passes, and radar instrument tasking.'
   contact:
     name: LeoLabs Support
     email: support@leolabs.space
@@ -42,13 +21,13 @@ servers:
 security:
 - leolabsKeyPair: []
 tags:
-- name: instruments
+- name: Instruments
   description: LeoLabs radar instruments and their tasking.
 paths:
   /instruments:
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: listInstruments
       summary: List radar instruments
       description: Lists the LeoLabs radar instruments and their siting and transmit characteristics.
@@ -85,7 +64,7 @@ paths:
     - $ref: '#/components/parameters/InstrumentId'
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: getInstrument
       summary: Get a radar instrument
       responses:
@@ -102,14 +81,12 @@ paths:
     - $ref: '#/components/parameters/InstrumentId'
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: getInstrumentStatistics
       summary: Get statistics for a radar instrument
       description: 'Returns statistics for a radar instrument. The LeoLabs client passes the literal value `all`
 
-        as the instrument id to request statistics across all instruments.
-
-        '
+        as the instrument id to request statistics across all instruments.'
       responses:
         '200':
           description: Statistics.
@@ -124,7 +101,7 @@ paths:
     - $ref: '#/components/parameters/InstrumentId'
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: listInstrumentTasks
       summary: List tasks for a radar instrument
       responses:
@@ -138,7 +115,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       tags:
-      - instruments
+      - Instruments
       operationId: createInstrumentTask
       summary: Create a task on a radar instrument
       requestBody:
@@ -172,7 +149,7 @@ paths:
     - $ref: '#/components/parameters/TaskId'
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: getInstrumentTask
       summary: Get a radar instrument task
       responses:
@@ -190,7 +167,7 @@ paths:
     - $ref: '#/components/parameters/TaskId'
     get:
       tags:
-      - instruments
+      - Instruments
       operationId: listInstrumentTaskMeasurements
       summary: List measurements collected by a task
       responses:
@@ -208,37 +185,39 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    InstrumentId:
+      name: instrumentId
+      in: path
+      required: true
+      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
+      schema:
+        type: string
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Task id.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid LeoLabs access key / secret key pair.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    MeasurementCorrection:
+    Error:
       type: object
-      description: A correction applied to a raw measurement.
+      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
+
+        response body cannot be parsed as JSON, indicating a top-level `error` member.
+
+        '
       properties:
-        source:
-          type: string
-          description: Correction source, e.g. `leolabs`, `iri16`.
-        type:
-          type: string
-          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
-        value:
-          type: number
         error:
-          type: number
-    Instrument:
-      type: object
-      description: A LeoLabs radar instrument.
-      properties:
-        id:
           type: string
-        latitude:
-          type: number
-        longitude:
-          type: number
-        altitude:
-          type: number
-        transmitFrequency:
-          type: number
-        transmitPower:
-          type: number
     Measurement:
       type: object
       description: A single radar measurement of a catalog object.
@@ -283,6 +262,42 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementCorrection'
+    MeasurementCorrection:
+      type: object
+      description: A correction applied to a raw measurement.
+      properties:
+        source:
+          type: string
+          description: Correction source, e.g. `leolabs`, `iri16`.
+        type:
+          type: string
+          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
+        value:
+          type: number
+        error:
+          type: number
+    Instrument:
+      type: object
+      description: A LeoLabs radar instrument.
+      properties:
+        id:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        altitude:
+          type: number
+        transmitFrequency:
+          type: number
+        transmitPower:
+          type: number
+    TaskRef:
+      type: object
+      description: A reference to a created tasking request.
+      properties:
+        id:
+          type: integer
     MeasurementValues:
       type: object
       description: Raw or corrected radar observables for a measurement.
@@ -302,44 +317,6 @@ components:
         rcs:
           type: number
           description: Radar cross section.
-    TaskRef:
-      type: object
-      description: A reference to a created tasking request.
-      properties:
-        id:
-          type: integer
-    Error:
-      type: object
-      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
-
-        response body cannot be parsed as JSON, indicating a top-level `error` member.
-
-        '
-      properties:
-        error:
-          type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid LeoLabs access key / secret key pair.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    InstrumentId:
-      name: instrumentId
-      in: path
-      required: true
-      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
-      schema:
-        type: string
-    TaskId:
-      name: taskId
-      in: path
-      required: true
-      description: Task id.
-      schema:
-        type: string
   securitySchemes:
     leolabsKeyPair:
       type: apiKey

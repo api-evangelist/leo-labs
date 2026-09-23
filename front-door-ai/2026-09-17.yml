@@ -1,0 +1,26 @@
+# Front Door AI Index — leo-labs — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: leo-labs
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.leolabs.space
+  final_host: leolabs.space
+  ownership: own
+  owner: leo-labs
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 3
+  host_score: 3
+  density: 8.47
+  words: 354
+  tiers:
+    agentic: 0
+    core: 3
+    model: 0
+  ambiguous: 6
+  top_terms:
+    intelligence: 6
+    AI: 3

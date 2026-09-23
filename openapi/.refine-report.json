@@ -1,8 +1,7 @@
 {
   "provider": "leo-labs",
   "sources": [
-    "leo-labs-catalog-api-openapi.yml",
-    "leo-labs-instruments-api-openapi.yml"
+    "_original/leo-labs-platform-openapi.yml"
   ],
   "outputs": [
     "leo-labs-catalog-api-openapi.yml",
@@ -11,6 +10,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "leo-labs-platform-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "leo-labs-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leo-labs-instruments-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
