@@ -72,7 +72,7 @@ tags_raw:
 - Geospatial
 apis:
 - aid: leo-labs:leo-labs-catalog-api
-  name: LeoLabs catalog API
+  name: LeoLabs Catalog API
   description: LeoLabs catalog of tracked LEO objects, their measurements, states and propagations.
   humanURL: https://www.leolabs.space/platform/
   baseURL: https://api.leolabs.space/v1
@@ -92,7 +92,7 @@ apis:
   - type: Documentation
     url: https://docs.leolabs.space/
 - aid: leo-labs:leo-labs-instruments-api
-  name: LeoLabs instruments API
+  name: LeoLabs Instruments API
   description: LeoLabs radar instruments and their tasking.
   humanURL: https://www.leolabs.space/platform/
   baseURL: https://api.leolabs.space/v1

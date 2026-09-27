@@ -185,29 +185,62 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    InstrumentId:
-      name: instrumentId
-      in: path
-      required: true
-      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
-      schema:
-        type: string
-    TaskId:
-      name: taskId
-      in: path
-      required: true
-      description: Task id.
-      schema:
-        type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid LeoLabs access key / secret key pair.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    MeasurementValues:
+      type: object
+      description: Raw or corrected radar observables for a measurement.
+      properties:
+        range:
+          type: number
+        rangeError:
+          type: number
+        doppler:
+          type: number
+        dopplerError:
+          type: number
+        azimuth:
+          type: number
+        elevation:
+          type: number
+        rcs:
+          type: number
+          description: Radar cross section.
+    Instrument:
+      type: object
+      description: A LeoLabs radar instrument.
+      properties:
+        id:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        altitude:
+          type: number
+        transmitFrequency:
+          type: number
+        transmitPower:
+          type: number
+    MeasurementCorrection:
+      type: object
+      description: A correction applied to a raw measurement.
+      properties:
+        source:
+          type: string
+          description: Correction source, e.g. `leolabs`, `iri16`.
+        type:
+          type: string
+          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
+        value:
+          type: number
+        error:
+          type: number
+    TaskRef:
+      type: object
+      description: A reference to a created tasking request.
+      properties:
+        id:
+          type: integer
     Error:
       type: object
       description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
@@ -262,61 +295,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementCorrection'
-    MeasurementCorrection:
-      type: object
-      description: A correction applied to a raw measurement.
-      properties:
-        source:
-          type: string
-          description: Correction source, e.g. `leolabs`, `iri16`.
-        type:
-          type: string
-          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
-        value:
-          type: number
-        error:
-          type: number
-    Instrument:
-      type: object
-      description: A LeoLabs radar instrument.
-      properties:
-        id:
-          type: string
-        latitude:
-          type: number
-        longitude:
-          type: number
-        altitude:
-          type: number
-        transmitFrequency:
-          type: number
-        transmitPower:
-          type: number
-    TaskRef:
-      type: object
-      description: A reference to a created tasking request.
-      properties:
-        id:
-          type: integer
-    MeasurementValues:
-      type: object
-      description: Raw or corrected radar observables for a measurement.
-      properties:
-        range:
-          type: number
-        rangeError:
-          type: number
-        doppler:
-          type: number
-        dopplerError:
-          type: number
-        azimuth:
-          type: number
-        elevation:
-          type: number
-        rcs:
-          type: number
-          description: Radar cross section.
+  responses:
+    Unauthorized:
+      description: Missing or invalid LeoLabs access key / secret key pair.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    InstrumentId:
+      name: instrumentId
+      in: path
+      required: true
+      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
+      schema:
+        type: string
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Task id.
+      schema:
+        type: string
   securitySchemes:
     leolabsKeyPair:
       type: apiKey
