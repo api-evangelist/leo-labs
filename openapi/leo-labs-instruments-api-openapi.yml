@@ -186,6 +186,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    TaskRef:
+      type: object
+      description: A reference to a created tasking request.
+      properties:
+        id:
+          type: integer
+    Error:
+      type: object
+      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
+
+        response body cannot be parsed as JSON, indicating a top-level `error` member.
+
+        '
+      properties:
+        error:
+          type: string
     MeasurementValues:
       type: object
       description: Raw or corrected radar observables for a measurement.
@@ -235,22 +251,6 @@ components:
           type: number
         error:
           type: number
-    TaskRef:
-      type: object
-      description: A reference to a created tasking request.
-      properties:
-        id:
-          type: integer
-    Error:
-      type: object
-      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
-
-        response body cannot be parsed as JSON, indicating a top-level `error` member.
-
-        '
-      properties:
-        error:
-          type: string
     Measurement:
       type: object
       description: A single radar measurement of a catalog object.
@@ -295,21 +295,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementCorrection'
-  responses:
-    Unauthorized:
-      description: Missing or invalid LeoLabs access key / secret key pair.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    InstrumentId:
-      name: instrumentId
-      in: path
-      required: true
-      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
-      schema:
-        type: string
     TaskId:
       name: taskId
       in: path
@@ -317,6 +303,20 @@ components:
       description: Task id.
       schema:
         type: string
+    InstrumentId:
+      name: instrumentId
+      in: path
+      required: true
+      description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid LeoLabs access key / secret key pair.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     leolabsKeyPair:
       type: apiKey
