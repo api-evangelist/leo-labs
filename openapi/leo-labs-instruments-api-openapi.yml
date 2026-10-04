@@ -186,22 +186,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    TaskRef:
-      type: object
-      description: A reference to a created tasking request.
-      properties:
-        id:
-          type: integer
-    Error:
-      type: object
-      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
-
-        response body cannot be parsed as JSON, indicating a top-level `error` member.
-
-        '
-      properties:
-        error:
-          type: string
     MeasurementValues:
       type: object
       description: Raw or corrected radar observables for a measurement.
@@ -221,6 +205,16 @@ components:
         rcs:
           type: number
           description: Radar cross section.
+    Error:
+      type: object
+      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
+
+        response body cannot be parsed as JSON, indicating a top-level `error` member.
+
+        '
+      properties:
+        error:
+          type: string
     Instrument:
       type: object
       description: A LeoLabs radar instrument.
@@ -295,19 +289,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementCorrection'
+    TaskRef:
+      type: object
+      description: A reference to a created tasking request.
+      properties:
+        id:
+          type: integer
   parameters:
-    TaskId:
-      name: taskId
-      in: path
-      required: true
-      description: Task id.
-      schema:
-        type: string
     InstrumentId:
       name: instrumentId
       in: path
       required: true
       description: Radar instrument id, e.g. `pfisr` or `msr`. Some endpoints accept the literal `all`.
+      schema:
+        type: string
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Task id.
       schema:
         type: string
   responses:
