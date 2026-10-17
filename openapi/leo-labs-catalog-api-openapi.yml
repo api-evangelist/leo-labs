@@ -306,25 +306,106 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    MeasurementValues:
+    TaskRef:
       type: object
-      description: Raw or corrected radar observables for a measurement.
+      description: A reference to a created tasking request.
       properties:
-        range:
+        id:
+          type: integer
+    StateFrame:
+      type: object
+      description: Position, velocity and covariance in a single reference frame.
+      properties:
+        position:
+          type: array
+          items:
+            type: number
+        velocity:
+          type: array
+          items:
+            type: number
+        covariance:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+        covarianceExtended:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+    CatalogObject:
+      type: object
+      description: An object tracked in the LeoLabs LEO catalog.
+      properties:
+        catalogNumber:
+          type: string
+          description: LeoLabs catalog number, e.g. `L335`.
+        noradCatalogNumber:
+          type: integer
+          description: NORAD catalog number, e.g. 27386.
+        name:
+          type: string
+          description: Object name, e.g. `ENVISAT`.
+    Tle:
+      type: object
+      description: A two-line element set derived from a LeoLabs state vector.
+      properties:
+        catalogNumber:
+          type: string
+    State:
+      type: object
+      description: An orbital state vector for a catalog object.
+      properties:
+        id:
+          type: integer
+        catalogNumber:
+          type: string
+        noradCatalogNumber:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        frames:
+          type: object
+          description: State expressed in one or more reference frames, e.g. `EME2000` and `TNW`.
+          additionalProperties:
+            $ref: '#/components/schemas/StateFrame'
+        coefficients:
+          type: object
+          description: Fitted physical coefficients for the object.
+          properties:
+            fitted:
+              type: object
+              properties:
+                drag:
+                  type: number
+                reflectivity:
+                  type: number
+        tle:
+          $ref: '#/components/schemas/Tle'
+    MeasurementCorrection:
+      type: object
+      description: A correction applied to a raw measurement.
+      properties:
+        source:
+          type: string
+          description: Correction source, e.g. `leolabs`, `iri16`.
+        type:
+          type: string
+          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
+        value:
           type: number
-        rangeError:
+        error:
           type: number
-        doppler:
-          type: number
-        dopplerError:
-          type: number
-        azimuth:
-          type: number
-        elevation:
-          type: number
-        rcs:
-          type: number
-          description: Radar cross section.
     Propagation:
       type: object
       description: A propagated ephemeris derived from a state vector.
@@ -361,49 +442,6 @@ components:
                   type: array
                   items:
                     type: number
-    Error:
-      type: object
-      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
-
-        response body cannot be parsed as JSON, indicating a top-level `error` member.
-
-        '
-      properties:
-        error:
-          type: string
-    CatalogObject:
-      type: object
-      description: An object tracked in the LeoLabs LEO catalog.
-      properties:
-        catalogNumber:
-          type: string
-          description: LeoLabs catalog number, e.g. `L335`.
-        noradCatalogNumber:
-          type: integer
-          description: NORAD catalog number, e.g. 27386.
-        name:
-          type: string
-          description: Object name, e.g. `ENVISAT`.
-    MeasurementCorrection:
-      type: object
-      description: A correction applied to a raw measurement.
-      properties:
-        source:
-          type: string
-          description: Correction source, e.g. `leolabs`, `iri16`.
-        type:
-          type: string
-          description: Correction type, e.g. `doppler_bias`, `range_bias`, `ionospheric`.
-        value:
-          type: number
-        error:
-          type: number
-    TaskRef:
-      type: object
-      description: A reference to a created tasking request.
-      properties:
-        id:
-          type: integer
     Measurement:
       type: object
       description: A single radar measurement of a catalog object.
@@ -448,72 +486,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementCorrection'
-    StateFrame:
+    MeasurementValues:
       type: object
-      description: Position, velocity and covariance in a single reference frame.
+      description: Raw or corrected radar observables for a measurement.
       properties:
-        position:
-          type: array
-          items:
-            type: number
-        velocity:
-          type: array
-          items:
-            type: number
-        covariance:
-          type: array
-          items:
-            type: array
-            items:
-              type: number
-        covarianceExtended:
-          type: array
-          items:
-            type: array
-            items:
-              type: number
-    State:
+        range:
+          type: number
+        rangeError:
+          type: number
+        doppler:
+          type: number
+        dopplerError:
+          type: number
+        azimuth:
+          type: number
+        elevation:
+          type: number
+        rcs:
+          type: number
+          description: Radar cross section.
+    Error:
       type: object
-      description: An orbital state vector for a catalog object.
+      description: 'Error envelope. The official LeoLabs client falls back to `{"error": "unknown"}` when a failed
+
+        response body cannot be parsed as JSON, indicating a top-level `error` member.
+
+        '
       properties:
-        id:
-          type: integer
-        catalogNumber:
-          type: string
-        noradCatalogNumber:
-          type: integer
-        timestamp:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        frames:
-          type: object
-          description: State expressed in one or more reference frames, e.g. `EME2000` and `TNW`.
-          additionalProperties:
-            $ref: '#/components/schemas/StateFrame'
-        coefficients:
-          type: object
-          description: Fitted physical coefficients for the object.
-          properties:
-            fitted:
-              type: object
-              properties:
-                drag:
-                  type: number
-                reflectivity:
-                  type: number
-        tle:
-          $ref: '#/components/schemas/Tle'
-    Tle:
-      type: object
-      description: A two-line element set derived from a LeoLabs state vector.
-      properties:
-        catalogNumber:
+        error:
           type: string
   parameters:
     StartTime:
@@ -524,11 +524,11 @@ components:
       schema:
         type: string
         format: date-time
-    CatalogNumber:
-      name: catalogNumber
+    StateId:
+      name: stateId
       in: path
       required: true
-      description: LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`.
+      description: Orbital state vector id.
       schema:
         type: string
     EndTime:
@@ -539,11 +539,11 @@ components:
       schema:
         type: string
         format: date-time
-    StateId:
-      name: stateId
+    CatalogNumber:
+      name: catalogNumber
       in: path
       required: true
-      description: Orbital state vector id.
+      description: LeoLabs catalog number, e.g. `L335`. Some endpoints accept the literal `all`.
       schema:
         type: string
   responses:
