@@ -1,4 +1,4 @@
-# Leo Labs
+# LeoLabs
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,6 +64,117 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Leo Labs is a company surfaced as a portfolio company of insight-partners and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+LeoLabs is a commercial space situational awareness company that operates a global network of phased-array radars and a cloud analytics platform delivering what it calls Persistent Orbital Intelligence for low Earth orbit. It independently tracks more than 23,000 objects in LEO and turns those radar observations into a commercial catalog, orbital state vectors, conjunction alerts, maneuver detection, pattern-of-life analysis and launch support for satellite operators, insurers, defense and civil space agencies. Customers reach the data either through the LeoLabs Platform web interface or, as LeoLabs describes it, "a suite of full-featured RESTful APIs for ground system integration and automation at scale" — the v1 Platform API over the catalog, radar measurements, state vectors, TLEs, ephemeris propagation and radar tasking. The company is backed by Insight Partners.
 
-Backed by: insight-partners — https://www.leolabs.space/
+**Areas:** Company · Space · Satellite · Space Situational Awareness · Space Traffic Management · Orbital Data · Radar · Aerospace · Defense · Geospatial
+
+## LeoLabs on APIs.io
+
+Everything profiled for LeoLabs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/leo-labs/](https://apis.io/providers/leo-labs/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [LeoLabs Catalog API](https://apis.io/apis/leo-labs/leo-labs-catalog-api/) — LeoLabs catalog of tracked LEO objects, their measurements, states and propagations.
+- [LeoLabs Instruments API](https://apis.io/apis/leo-labs/leo-labs-instruments-api/) — LeoLabs radar instruments and their tasking.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [leo-labs](https://apis.io/servers/leo-labs/leo-labs/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [LeoLabs Platform catalog API](https://apis.io/collections/leo-labs/open-leo-labs-catalog-api/)
+- [LeoLabs Platform catalog instruments API](https://apis.io/collections/leo-labs/open-leo-labs-instruments-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Leo Labs Platform Overlay](https://apis.io/overlays/leo-labs/leo-labs-platform-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Leo Labs Authentication](https://apis.io/security/leo-labs/leo-labs-authentication/)
+- [Leo Labs Domain Security](https://apis.io/security/leo-labs/leo-labs-domain-security/)
+- [Leo Labs Vulnerability Disclosure](https://apis.io/security/leo-labs/leo-labs-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Leo Labs Scopes](https://apis.io/scopes/leo-labs/leo-labs-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.leolabs.space/)
+- [Documentation](https://docs.leolabs.space/)
+- [Sign up](https://platform.leolabs.space/)
+- [Blog](https://www.leolabs.space/newsroom/)
+- [Security](https://www.leolabs.space/vulnerability-disclosure/)
+- [Terms of service](https://www.leolabs.space/terms-of-use/)
+- [Privacy policy](https://www.leolabs.space/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 30.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 14.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 44.6 |
+| Access clarity | 34.2 |
+
+**Agent readiness 32.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/leo-labs/](https://apis.io/providers/leo-labs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LeoLabs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/leo-labs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
